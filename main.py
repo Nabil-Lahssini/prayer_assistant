@@ -16,7 +16,6 @@ translator = Translator()
 salat_list = ["Fajr","Dhuhr","Asr","Maghreb","Isha"]
 SCHOOL = 3
 CURRENT_TIME = datetime.now().timestamp()
-#CURRENT_TIME = 1629310000.29174
 URL = "https://api.pray.zone/v2/times/today.json"
 LOCATION = "Brussels"
 DEST = "fr"
