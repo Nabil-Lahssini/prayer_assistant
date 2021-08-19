@@ -11,12 +11,13 @@ README = (HERE / "README.md").read_text()
 setup(
     name="prayer-assistant",
     version="2.0",
-    description="Read the latest Real Python tutorials",
+    description="The prayer assistant is a voice assistant that can tell when the next prayer will occur. The tool supports over 100 languages.",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/Nabil-Lahssini/prayer_assistant",
-    author="Real Python",
+    author="Nabil Lahssini",
     author_email="NabilLahssini@gmail.com",
+    license="MIT",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",

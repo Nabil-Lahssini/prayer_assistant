@@ -131,6 +131,3 @@ def main():
         play_error("The city you have given is incorrect")
     except ValueError:
         play_error("The language you have given is incorrect")
-
-if __name__ == "__main__":
-    main()
