@@ -7,7 +7,7 @@ The prayer_tool is a python package that you can simply install using the follow
 pip install prayer-assistant
 ```
 ## How to use it ?
-Simply type the following commando
+Simply type the following command
 ```
 python -m prayer_tool
 ```
