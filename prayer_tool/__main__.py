@@ -5,12 +5,15 @@ import getopt
 from datetime import time, date, datetime
 from json import JSONDecodeError
 import requests
+import tempfile
 from gtts import gTTS
 from playsound import playsound
 from googletrans import Translator
 
 ##get translator instance
 translator = Translator()
+temp_dir = tempfile.TemporaryDirectory()
+# use temp_dir, and when done:
 
 ##Declaring needed variables
 salat_list = ["Fajr","Dhuhr","Asr","Maghreb","Isha"]
@@ -88,13 +91,12 @@ def get_translation(ins, source):
 
 def play(text):
     """Plays the sound"""
-    dire = "./out.mp3"
+    dire = temp_dir.name+"/out.mp3"
     output = get_translation(text, "fr")
 	#Use the translated text to generate an mp3 file with it
     gTTS(output.text, lang=DEST).save(dire)
 	#Plays the mp3 file
     playsound(dire)
-    return dire
 
 def speak():
     """Will generate a string and play it in the STT class"""
@@ -114,20 +116,23 @@ def speak():
         text = f"La prière de {salat_list[number]} est dans {result}"
     else:
         text = "Toutes les prières sont déjà passées"
-    return play(text)
+    play(text)
 
 def play_error(message):
     """Function to play the error messages"""
-    path = "./error.mp3"
+    path = temp_dir.name+"/error.mp3"
     gTTS(message, lang="en").save(path)
     playsound(path)
-    os.remove(path)
 
 def main():
     """Main function"""
     try:
-        os.remove(speak())
+        speak()
     except JSONDecodeError:
         play_error("The city you have given is incorrect")
     except ValueError:
         play_error("The language you have given is incorrect")
+
+if __name__ == "__main__":
+    main()
+    temp_dir.cleanup()

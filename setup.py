@@ -10,7 +10,7 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="prayer_tool",
-    version="2.1",
+    version="2.1.3",
     description="The prayer assistant is a voice assistant that can tell when the next prayer will occur. The tool supports over 100 languages.",
     long_description=README,
     long_description_content_type="text/markdown",
