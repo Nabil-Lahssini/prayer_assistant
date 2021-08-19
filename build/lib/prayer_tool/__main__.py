@@ -92,6 +92,7 @@ def play(text):
     output = get_translation(text, "fr")
 	#Use the translated text to generate an mp3 file with it
     gTTS(output.text, lang=DEST).save(dire)
+    print(output.text)
 	#Plays the mp3 file
     playsound(dire)
     return dire
@@ -114,6 +115,7 @@ def speak():
         text = f"La prière de {salat_list[number]} est dans {result}"
     else:
         text = "Toutes les prières sont déjà passées"
+    print(text)
     return play(text)
 
 def play_error(message):
@@ -131,3 +133,6 @@ def main():
         play_error("The city you have given is incorrect")
     except ValueError:
         play_error("The language you have given is incorrect")
+
+if __name__ == "__main__":
+    main()
