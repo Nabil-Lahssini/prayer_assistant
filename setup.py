@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 # This call to setup() does all the work
 setup(
-    name="prayer-assistant",
+    name="prayer_tool",
     version="2.0",
     description="The prayer assistant is a voice assistant that can tell when the next prayer will occur. The tool supports over 100 languages.",
     long_description=README,
@@ -23,12 +23,9 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
     ],
-    packages=["prayer-assistant"],
-    include_package_data=True,
-    install_requires=["gtts", "playsound", "googletrans==3.1.0a0"],
+    packages=["prayer_tool"],
+    install_requires=["gtts", "playsound", "googletrans==3.1.0a0", "requests"],
     entry_points={
-        "console_scripts": [
-            "prayer-assistant=prayer-assistant.__main__:main",
-        ]
+        "console_scripts": ['prayer_tool=prayer_tool.__main__:main']
     },
 )

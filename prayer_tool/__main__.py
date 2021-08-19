@@ -1,4 +1,4 @@
-"""Prayer assistant"""
+"""prayer_tool"""
 import sys
 import os
 import getopt
