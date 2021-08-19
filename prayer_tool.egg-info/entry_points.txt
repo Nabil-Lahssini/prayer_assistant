@@ -1,3 +1,0 @@
-[console_scripts]
-prayer_tool = prayer_tool.__main__:main
-
