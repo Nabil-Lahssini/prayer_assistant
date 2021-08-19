@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 # This call to setup() does all the work
 setup(
-    name="prayer_assistant",
+    name="prayer-assistant",
     version="2.0",
     description="Read the latest Real Python tutorials",
     long_description=README,
@@ -22,12 +22,12 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
     ],
-    packages=["prayer_assistant"],
+    packages=["prayer-assistant"],
     include_package_data=True,
     install_requires=["gtts", "playsound", "googletrans==3.1.0a0"],
     entry_points={
         "console_scripts": [
-            "prayer_assistant=prayer_assistant.__main__:main",
+            "prayer-assistant=prayer-assistant.__main__:main",
         ]
     },
 )
