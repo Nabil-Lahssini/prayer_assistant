@@ -79,6 +79,6 @@ class PrayerTimes:
         return get_today_prayer(request)
 
     def this_month(self):
-        """returns monthly prayer"""
+        """returns prayer list of whole month"""
         request = request_builder(self.city, self.school, self.juristic, self.timeformat, URL_THIS_MONTH)
         return get_month_prayer(request)
