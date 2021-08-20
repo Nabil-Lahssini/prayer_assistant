@@ -13,7 +13,7 @@ To use our library in your code, you need to import it and intialize it, that's 
 from prayer_tool import prayer_times
 
 ## Intialize an instance of it
-instance = prayer_times.PrayerTimes(CITY="Brussels", SCHOOL=3, JURISTIC=0)
+instance = prayer_times.PrayerTimes(city="Brussels", school=3, juristic=0)
 
 ## Get today's prayer's
 today = instance.today()
@@ -31,7 +31,7 @@ You can also get the schedule for the whole month
 from prayer_tool import prayer_times
 
 ## Intialize an instance of it
-instance = prayer_times.PrayerTimes(CITY="Brussels", SCHOOL=3, JURISTIC=0)
+instance = prayer_times.PrayerTimes(city="Brussels", school=3, juristic=0)
 
 ## returns an array of the daily prayer
 this_month = instance.this_month()
