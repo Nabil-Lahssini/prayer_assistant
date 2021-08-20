@@ -26,6 +26,6 @@ setup(
     packages=["prayer_tool"],
     install_requires=["gtts", "playsound", "googletrans==3.1.0a0", "requests"],
     entry_points={
-        "console_scripts": ['prayer_tool=prayer_tool.__main__:main']
+        "console_scripts": ['prayer_tool=prayer_tool.voice_assist:main']
     },
 )
