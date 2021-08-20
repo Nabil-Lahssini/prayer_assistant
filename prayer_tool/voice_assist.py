@@ -1,11 +1,10 @@
 """prayer_tool"""
 import sys
-import os
 import getopt
 from datetime import time, date, datetime
 from json import JSONDecodeError
-import requests
 import tempfile
+import prayer_times
 from gtts import gTTS
 from playsound import playsound
 from googletrans import Translator
@@ -13,13 +12,14 @@ from googletrans import Translator
 ##get translator instance
 translator = Translator()
 temp_dir = tempfile.TemporaryDirectory()
-# use temp_dir, and when done:
+
+##get prayer times instance
+instance = prayer_times.Prayer_times()
+
 
 ##Declaring needed variables
-salat_list = ["Fajr","Dhuhr","Asr","Maghreb","Isha"]
 SCHOOL = 3
-CURRENT_TIME = datetime.now().timestamp()
-URL = "https://api.pray.zone/v2/times/today.json"
+CURRENT_TIME = datetime.now().time()
 LOCATION = "Brussels"
 DEST = "fr"
 HELP_STRING = '\nArguments:\n -c <city> (default -> Brussels) \n -l <language> (default -> fr)\n'
@@ -41,49 +41,6 @@ for opt, arg in opts:
     elif opt in ("-l", "--lang"):
         DEST = arg
 
-def request_builder():
-    """Creates the request with correct url and parameters"""
-    params = {'city': LOCATION, 'school': SCHOOL}
-    request = requests.get(url = URL, params=params)
-    return request
-
-def get_json():
-    """makes the get request and returns raw json"""
-    request = request_builder()
-    data = request.json()
-    return data
-
-def format_time(temp_salat):
-    """Format string hours to time object"""
-    (hour, second) = temp_salat.split(':')
-    return time(int(hour), int(second))
-
-def get_timestamps(input_time):
-    """Returns timestamps from given time parameter"""
-    tod = date.today()
-    today = datetime(tod.year, tod.month, tod.day,
-    input_time.hour, input_time.minute, input_time.second)
-    return datetime.timestamp(today)
-
-def parse_json_to_timestamp_array():
-    """Uses the raw JSON to create an array of timestamps"""
-    times = get_json()["results"]["datetime"][0]["times"]
-    salat_array = [times["Fajr"], times["Dhuhr"], times["Asr"], times["Maghrib"], times["Isha"]]
-    time_array = []
-    for sal in salat_array:
-        time_array.append(get_timestamps(format_time(sal)))
-    return time_array
-
-def check_time():
-    """Will compare current time with the salat to show the next one"""
-    times = parse_json_to_timestamp_array()
-    i = 0
-    while i < 5:
-        if CURRENT_TIME < times[i]:
-            return datetime.fromtimestamp(times[i]), int(i)
-        i += 1
-    return 0, 0
-
 def get_translation(ins, source):
     """Translates the output"""
     translated = translator.translate(ins,src=source ,dest=DEST)
@@ -98,22 +55,28 @@ def play(text):
 	#Plays the mp3 file
     playsound(dire)
 
+def compare_time(time1, time2):
+    """Returns the difference in minutes between two time objects"""
+    minutes1 = int(time1.hour*60) + int(time1.minute)
+    minutes2 = int(time2.hour*60) + int(time2.minute)
+    return minutes2 - minutes1
+
 def speak():
     """Will generate a string and play it in the STT class"""
-    next_salat, number = check_time()
+    today_salat = instance.today()
+    next_salat = today_salat.next_salat()
     text = ""
-    if next_salat != 0:
-        difference = next_salat - datetime.fromtimestamp(CURRENT_TIME)
-        sec = difference.total_seconds()
+    if next_salat != None:
+        difference = compare_time(CURRENT_TIME, next_salat.time)
         result = ""
-        minutes = int(sec/60)
-        rest_minutes = int(sec/60 % 60)
+        minutes = difference
+        rest_minutes = int(minutes % 60)
         hours = int(minutes/60)
         if minutes >= 60:
             result = str(hours)+ " heures et "+  str(rest_minutes) +" minutes"
         else:
             result = str(minutes) + " minutes"
-        text = f"La prière de {salat_list[number]} est dans {result}"
+        text = f"La prière de {next_salat.name} est dans {result}"
     else:
         text = "Toutes les prières sont déjà passées"
     play(text)
