@@ -10,10 +10,10 @@ pip install prayer-tool
 ## How to use it ?
 To use our library in your code, you need to import it and intialize it, that's all. It's easy !
 ```
-import prayer_tool
+from prayer_tool import prayer_times
 
 ## Intialize an instance of it
-instance = prayer_tool.Prayer_times(CITY="Brussels", SCHOOL=3, JURISTIC=0)
+instance = prayer_times.PrayerTimes(CITY="Brussels", SCHOOL=3, JURISTIC=0)
 
 ## Get today's prayer's
 today = instance.today()
@@ -28,10 +28,10 @@ print(f"{today.dhor.name} : {today.dhor.time}")
 
 You can also get the schedule for the whole month
 ```
-import prayer_tool
+from prayer_tool import prayer_times
 
 ## Intialize an instance of it
-instance = prayer_tool.Prayer_times(CITY="Brussels", SCHOOL=3, JURISTIC=0)
+instance = prayer_times.PrayerTimes(CITY="Brussels", SCHOOL=3, JURISTIC=0)
 
 ## returns an array of the daily prayer
 this_month = instance.this_month()
