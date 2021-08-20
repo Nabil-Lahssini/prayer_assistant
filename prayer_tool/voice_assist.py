@@ -7,7 +7,7 @@ import tempfile
 from gtts import gTTS
 from playsound import playsound
 from googletrans import Translator
-import prayer_times
+from prayer_tool import prayer_times
 
 ##get translator instance
 translator = Translator()
