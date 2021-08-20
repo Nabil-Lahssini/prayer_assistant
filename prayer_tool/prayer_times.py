@@ -1,8 +1,8 @@
 from datetime import time
 import requests
 from datetime import datetime
-from prayer import Prayer
-from day import Day
+from entity.prayer import Prayer
+from entity.day import Day
 
 
 ##Declaring needed variables
@@ -34,6 +34,7 @@ def string_to_date(date_str):
     return date_obj
 
 def parse_day_prayer(day_object, dates):
+    """Returns a Day object with given parameters"""
     day_date = string_to_date(dates)
     prayer = Day(format_time(day_object["Fajr"]), format_time(day_object["Dhuhr"]), 
         format_time(day_object["Asr"]), format_time(day_object["Maghrib"]), 
@@ -41,6 +42,7 @@ def parse_day_prayer(day_object, dates):
     return prayer
 
 def get_month_prayer(request):
+    """Returns a list of the monthly prayers as a list of days"""
     month_list = []
     data = request.json()
     month = data["results"]["datetime"]
@@ -51,7 +53,7 @@ def get_month_prayer(request):
 class Prayer_times:
     """Prayer times API implementation class
 
-    You have to create an instance of Prayer_times to use this API
+    You have to create an instance of Prayer_times to use this API. For more information : https://pypi.org/project/prayer-tool/
 
     :param CITY: The city from where you need the calendar.
                          For example ``Brussels``

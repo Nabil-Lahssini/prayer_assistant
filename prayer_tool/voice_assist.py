@@ -16,7 +16,6 @@ temp_dir = tempfile.TemporaryDirectory()
 ##get prayer times instance
 instance = prayer_times.Prayer_times()
 
-
 ##Declaring needed variables
 SCHOOL = 3
 CURRENT_TIME = datetime.now().time()

@@ -10,8 +10,8 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="prayer_tool",
-    version="2.1.3",
-    description="The prayer assistant is a voice assistant that can tell when the next prayer will occur. The tool supports over 100 languages.",
+    version="3.0.0",
+    description="The prayer tool api is a complete api to get the prayer schedule in your city. Fast, updated and easy to use !",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/Nabil-Lahssini/prayer_assistant",
