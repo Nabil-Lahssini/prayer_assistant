@@ -1,18 +1,18 @@
+"""This is where the magic happens ;). The main file."""
 from datetime import time
-import requests
 from datetime import datetime
-from entity.prayer import Prayer
-from entity.day import Day
+import requests
+from day import Day
 
 
 ##Declaring needed variables
 URL_TODAY = "https://api.pray.zone/v2/times/today.json"
 URL_THIS_MONTH = "https://api.pray.zone/v2/times/this_month.json"
 
-def request_builder(city, school, juristic, timeformat, URL):
+def request_builder(city, school, juristic, timeformat, url):
     """Creates the request with correct url and parameters"""
     params = {'city': city, 'school': school, 'juristic':juristic, 'timeformat': timeformat}
-    request = requests.get(url = URL, params=params)
+    request = requests.get(url = url, params=params)
     return request
 
 def format_time(temp_salat):
@@ -36,8 +36,8 @@ def string_to_date(date_str):
 def parse_day_prayer(day_object, dates):
     """Returns a Day object with given parameters"""
     day_date = string_to_date(dates)
-    prayer = Day(format_time(day_object["Fajr"]), format_time(day_object["Dhuhr"]), 
-        format_time(day_object["Asr"]), format_time(day_object["Maghrib"]), 
+    prayer = Day(format_time(day_object["Fajr"]), format_time(day_object["Dhuhr"]),
+        format_time(day_object["Asr"]), format_time(day_object["Maghrib"]),
         format_time(day_object["Isha"]), day_date)
     return prayer
 
@@ -50,7 +50,7 @@ def get_month_prayer(request):
         month_list.append(parse_day_prayer(day["times"], day["date"]["gregorian"]))
     return month_list
 
-class Prayer_times:
+class PrayerTimes:
     """Prayer times API implementation class
 
     You have to create an instance of Prayer_times to use this API. For more information : https://pypi.org/project/prayer-tool/
@@ -67,17 +67,18 @@ class Prayer_times:
                          For example 0
     :type JURISTIC: int
     """
-    def __init__(self,CITY="Brussels", SCHOOL=3, JURISTIC=0):
-        self.CITY = CITY
-        self.SCHOOL = SCHOOL
-        self.JURISTIC = JURISTIC
-        self.TIMEFORMAT = 0
-        
+    def __init__(self,city="Brussels", school=3, juristic=0):
+        self.city = city
+        self.school = school
+        self.juristic = juristic
+        self.timeformat = 0
+
     def today(self):
-        request = request_builder(self.CITY, self.SCHOOL, self.JURISTIC, self.TIMEFORMAT, URL_TODAY)
+        """returns today prayer"""
+        request = request_builder(self.city, self.school, self.juristic, self.timeformat, URL_TODAY)
         return get_today_prayer(request)
 
     def this_month(self):
-        request = request_builder(self.CITY, self.SCHOOL, self.JURISTIC, self.TIMEFORMAT, URL_THIS_MONTH)
+        """returns monthly prayer"""
+        request = request_builder(self.city, self.school, self.juristic, self.timeformat, URL_THIS_MONTH)
         return get_month_prayer(request)
-

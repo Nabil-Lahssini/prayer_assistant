@@ -1,20 +1,17 @@
 """prayer_tool"""
 import sys
 import getopt
-from datetime import time, date, datetime
+from datetime import datetime
 from json import JSONDecodeError
 import tempfile
-import prayer_times
 from gtts import gTTS
 from playsound import playsound
 from googletrans import Translator
+import prayer_times
 
 ##get translator instance
 translator = Translator()
 temp_dir = tempfile.TemporaryDirectory()
-
-##get prayer times instance
-instance = prayer_times.Prayer_times()
 
 ##Declaring needed variables
 SCHOOL = 3
@@ -40,6 +37,9 @@ for opt, arg in opts:
     elif opt in ("-l", "--lang"):
         DEST = arg
 
+##get prayer times instance
+instance = prayer_times.PrayerTimes(city=LOCATION, school=SCHOOL)
+
 def get_translation(ins, source):
     """Translates the output"""
     translated = translator.translate(ins,src=source ,dest=DEST)
@@ -63,9 +63,9 @@ def compare_time(time1, time2):
 def speak():
     """Will generate a string and play it in the STT class"""
     today_salat = instance.today()
-    next_salat = today_salat.next_salat()
+    next_salat = today_salat.next_prayer()
     text = ""
-    if next_salat != None:
+    if next_salat is not None:
         difference = compare_time(CURRENT_TIME, next_salat.time)
         result = ""
         minutes = difference
