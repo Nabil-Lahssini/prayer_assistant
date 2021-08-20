@@ -2,12 +2,49 @@
 from datetime import time
 from datetime import datetime
 import requests
-from day import Day
-
 
 ##Declaring needed variables
 URL_TODAY = "https://api.pray.zone/v2/times/today.json"
 URL_THIS_MONTH = "https://api.pray.zone/v2/times/this_month.json"
+
+class Prayer:
+    """Individual prayer object"""
+    def __init__(self, name, time):
+        self.name = name
+        self.time = time
+
+class Day:
+    """Day object, list of Prayer objects"""
+    def __init__(self, fajr, dhor, asr, maghreb, icha, date):
+        self.fajr = Prayer("fajr", fajr)
+        self.dhor = Prayer("dhor", dhor)
+        self.asr = Prayer("asr", asr)
+        self.maghreb = Prayer("maghreb", maghreb)
+        self.icha = Prayer("icha", icha)
+        self.date = date
+    
+    def to_string(self):
+        """Returns a string to show the daily prayers"""
+        string = f"Date : {self.date} \n{self.fajr.name} : {self.fajr.time}",
+        f" \n{self.fajr.name} : {self.dhor.time} \n{self.fajr.name} : {self.asr.time}\n",
+        f"{self.fajr.name} : {self.maghreb.time} \n{self.fajr.name} : {self.icha.time}"
+        return string
+
+    def next_prayer(self):
+        """Returns an object of the next prayer, based on current time of the system"""
+        time = datetime.now().time()
+        if time <= self.fajr.time:
+            return self.fajr
+        elif time <= self.dhor.time:
+            return self.dhor
+        elif time <= self.asr.time:
+            return self.asr
+        elif time <= self.maghreb.time:
+            return self.maghreb
+        elif time <= self.icha.time:
+            return self.icha
+        else:
+            return None
 
 def request_builder(city, school, juristic, timeformat, url):
     """Creates the request with correct url and parameters"""
