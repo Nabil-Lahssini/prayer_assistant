@@ -78,7 +78,7 @@ You can use it by simply typing this command:
 ```
 python -m prayer_tool -c <city> -l <language>
 ```
-EXAMPLE for an arabic output for the next prayer in london.
+EXAMPLE for an arabic voice output for the next prayer in london.
 ```
 python -m prayer_tool -c London -l ar
 ```
