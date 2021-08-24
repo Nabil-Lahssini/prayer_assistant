@@ -6,10 +6,11 @@ from multipledispatch import dispatch
 from requests.models import Response
 
 ##Declaring needed variables
-URL_TODAY = "https://api.pray.zone/v2/times/today.json"
-URL_THIS_MONTH = "https://api.pray.zone/v2/times/this_month.json"
-URL_DATE = "https://api.pray.zone/v2/times/dates.json"
-URL_DAY = "https://api.pray.zone/v2/times/day.json"
+BASE_URL = "https://api.pray.zone/v2/times/"
+URL_TODAY = BASE_URL+"today.json"
+URL_THIS_MONTH = BASE_URL+"this_month.json"
+URL_DATE = BASE_URL+"dates.json"
+URL_DAY = BASE_URL+"day.json"
 VALUE_ERROR_STRING = "One of the parameters you've entered is in the wrong type. Please refer to the documentation."
 
 class Prayer:
