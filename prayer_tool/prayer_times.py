@@ -2,10 +2,12 @@
 from datetime import time
 from datetime import datetime
 import requests
+from json.decoder import JSONDecodeError
 
 ##Declaring needed variables
 URL_TODAY = "https://api.pray.zone/v2/times/today.json"
 URL_THIS_MONTH = "https://api.pray.zone/v2/times/this_month.json"
+VALUE_ERROR_STRING = "One of the parameters you've entered is in the wrong type. Please refer to the documentation."
 
 class Prayer:
     """Individual prayer object"""
@@ -25,9 +27,7 @@ class Day:
     
     def to_string(self):
         """Returns a string to show the daily prayers"""
-        string = f"Date : {self.date} \n{self.fajr.name} : {self.fajr.time}",
-        f" \n{self.fajr.name} : {self.dhor.time} \n{self.fajr.name} : {self.asr.time}\n",
-        f"{self.fajr.name} : {self.maghreb.time} \n{self.fajr.name} : {self.icha.time}"
+        string = f"Date : {self.date} \n{self.fajr.name} : {self.fajr.time}\n{self.dhor.name} : {self.dhor.time} \n{self.asr.name} : {self.asr.time}\n{self.maghreb.name} : {self.maghreb.time} \n{self.icha.name} : {self.icha.time}"
         return string
 
     def next_prayer(self):
@@ -60,7 +60,10 @@ def format_time(temp_salat):
 
 def get_today_prayer(request):
     """Returns today prayer"""
-    data = request.json()
+    try:
+        data = request.json()
+    except JSONDecodeError:
+        raise ValueError(VALUE_ERROR_STRING)
     times = data["results"]["datetime"][0]["times"]
     dates = data["results"]["datetime"][0]["date"]["gregorian"]
     return parse_day_prayer(times, dates)
@@ -93,22 +96,25 @@ class PrayerTimes:
     You have to create an instance of Prayer_times to use this API. For more information : https://pypi.org/project/prayer-tool/
 
     :param CITY: The city from where you need the calendar.
-                         For example ``Brussels``
+                        For example ``Brussels``
     :type service_urls: string
 
     :param SCHOOL: Every school have a different calculation, we use 3 by default (Muslim World League).
-                         For example 3
+                        For example 3
     :type SCHOOL: int
 
     :param JURISTIC: 0 for Shafii (or the standard way), 1 for Hanafi. If you leave this empty, it defaults to Shafii.
-                         For example 0
+                        For example 0
     :type JURISTIC: int
     """
     def __init__(self,city="Brussels", school=3, juristic=0):
-        self.city = city
-        self.school = school
-        self.juristic = juristic
-        self.timeformat = 0
+        if type(city) is str and type(school) is int and type(juristic) is int:
+            self.city = city
+            self.school = school
+            self.juristic = juristic
+            self.timeformat = 0
+        else:
+            raise ValueError(VALUE_ERROR_STRING)
 
     def today(self):
         """returns today prayer"""

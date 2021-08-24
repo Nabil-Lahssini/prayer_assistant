@@ -38,7 +38,7 @@ this_month = instance.this_month()
 
 ## usage example
 for day in this_month:
-    print(f"{today.fajr.name} : {today.fajr.time}")
+    print(f"{day.fajr.name} : {day.fajr.time}")
 
 # 03:25:00
 # 03:29:00
