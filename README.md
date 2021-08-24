@@ -16,7 +16,7 @@ from prayer_tool import prayer_times
 instance = prayer_times.PrayerTimes(city="Brussels", school=3, juristic=0)
 
 ## Get today's prayer's
-today = instance.today()
+today = instance.get_date()
 
 # EXAMPLES
 print(f"{today.fajr.name} : {today.fajr.time}")
@@ -25,24 +25,67 @@ print(f"{today.fajr.name} : {today.fajr.time}")
 print(f"{today.dhor.name} : {today.dhor.time}")
 # dhor : 13:46:00
 ```
-
-You can also get the schedule for the whole month
+## Advanced requests
+### Precise day
+You can also get the schedule for a precise day.
+Code example:
 ```
 from prayer_tool import prayer_times
+import datetime
 
-## Intialize an instance of it
-instance = prayer_times.PrayerTimes(city="Brussels", school=3, juristic=0)
+#Declaring an instance
+instance = prayer_times.PrayerTimes()
 
-## returns an array of the daily prayer
-this_month = instance.this_month()
+#The datetime object we need
+date = datetime.datetime(year = 2021, month = 8, day = 23)
 
-## usage example
-for day in this_month:
-    print(f"{day.fajr.name} : {day.fajr.time}")
+#Call the function and save the result
+result = instance.get_date(date)
 
-# 03:25:00
-# 03:29:00
-# 03:33:00
+print(result.__str__())
+
+##output:
+Date : 2021-08-23 00:00:00 
+fajr : 04:32:00
+dhor : 13:45:00
+asr : 17:37:00
+maghreb : 20:48:00
+icha : 22:48:00
+```
+### Date interval
+You are also able to ask for the schedule in a date interval.
+Code example:
+```
+from prayer_tool import prayer_times
+import datetime
+
+#Declaring an instance
+instance = prayer_times.PrayerTimes(city="Paris")
+
+#The datetime objects we need
+start = datetime.datetime(year = 2021, month = 8, day = 23)
+end = datetime.datetime(year = 2021, month = 8, day = 26)
+
+#Call the function and save the result
+result = instance.get_date(start, end)
+
+for item in result:
+    print(item.__str__() + "\n")
+
+##output:
+Date : 2021-08-23 00:00:00 
+fajr : 04:32:00
+dhor : 13:45:00
+asr : 17:37:00
+maghreb : 20:48:00
+icha : 22:48:00
+
+Date : 2021-08-24 00:00:00
+fajr : 04:35:00
+dhor : 13:45:00
+asr : 17:36:00
+maghreb : 20:46:00
+icha : 22:45:00
 ...
 ```
 

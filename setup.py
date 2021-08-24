@@ -24,7 +24,7 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     packages=["prayer_tool"],
-    install_requires=["gtts", "playsound", "googletrans==3.1.0a0", "requests"],
+    install_requires=["gtts", "playsound", "googletrans==3.1.0a0", "requests", "multipledispatch"],
     entry_points={
         "console_scripts": ['prayer_tool=prayer_tool.voice_assist:main']
     },
