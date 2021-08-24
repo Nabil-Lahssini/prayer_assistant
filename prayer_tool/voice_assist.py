@@ -62,7 +62,7 @@ def compare_time(time1, time2):
 
 def speak():
     """Will generate a string and play it in the STT class"""
-    today_salat = instance.today()
+    today_salat = instance.get_date()
     next_salat = today_salat.next_prayer()
     text = ""
     if next_salat is not None:
