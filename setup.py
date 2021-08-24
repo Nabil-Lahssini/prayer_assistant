@@ -21,7 +21,7 @@ setup(
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.7",
     ],
     packages=["prayer_tool"],
     install_requires=["gtts", "playsound", "googletrans==3.1.0a0", "requests", "multipledispatch"],
