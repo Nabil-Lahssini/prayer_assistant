@@ -1,5 +1,7 @@
 """prayer_tool"""
 import sys
+import os
+from sys import platform
 import getopt
 from datetime import datetime
 from json import JSONDecodeError
@@ -45,6 +47,13 @@ def get_translation(ins, source):
     translated = translator.translate(ins,src=source ,dest=DEST)
     return translated
 
+def play_mp3(dir):
+    """Reads mp3"""
+    if platform == "win32":
+        playsound(dir)
+    else:
+        os.system(f"omxplayer {dir} -o alsa")
+
 def play(text):
     """Plays the sound"""
     dire = temp_dir.name+"/out.mp3"
@@ -52,7 +61,7 @@ def play(text):
 	#Use the translated text to generate an mp3 file with it
     gTTS(output.text, lang=DEST).save(dire)
 	#Plays the mp3 file
-    playsound(dire)
+    play_mp3(dire)
 
 def compare_time(time1, time2):
     """Returns the difference in minutes between two time objects"""
