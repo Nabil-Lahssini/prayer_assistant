@@ -10,7 +10,7 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="prayer_tool",
-    version="3.1.2",
+    version="3.1.3a",
     description="The prayer tool api is a complete api to get the prayer schedule in your city. Fast, updated and easy to use !",
     long_description=README,
     long_description_content_type="text/markdown",
