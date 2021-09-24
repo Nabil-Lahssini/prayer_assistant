@@ -49,7 +49,10 @@ def get_translation(ins, source):
 
 def play_mp3(dir):
     """Reads mp3"""
-    playsound(dir)
+    if platform == "win32":
+        playsound(dir)
+    else:
+        os.system(f"omxplayer {dir}")
 
 def play(text):
     """Plays the sound"""
