@@ -1,5 +1,5 @@
 # prayer_tool
-The prayer_tool is an open-source library based on prayertimes.date API. [Check their API here](https://prayertimes.date/api)
+The prayer_tool is an open-source library based on prayertimes.date API. [Check their API here](https://prayertimes.date/api)\
 It provides you a complete library to get the prayer times for the day or the whole month.
 
 ## How to get it ?
@@ -113,15 +113,4 @@ JURISTIC :
 Id	Juristic
 0	Shafii (default)
 1	Hanafi
-```
-
-## Extra
-A voice assistant is also available for the more enthusiast programmers ! It tells you when the next prayer will occur.
-You can use it by simply typing this command:
-```
-python -m prayer_tool -c <city> -l <language>
-```
-EXAMPLE for an arabic voice output for the next prayer in london.
-```
-python -m prayer_tool -c London -l ar
 ```

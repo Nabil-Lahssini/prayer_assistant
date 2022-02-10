@@ -4,6 +4,7 @@ from json.decoder import JSONDecodeError
 import requests
 from multipledispatch import dispatch
 from requests.models import Response
+from .Entities import Day
 
 ##Declaring needed variables
 BASE_URL = "https://api.pray.zone/v2/times/"
@@ -13,42 +14,6 @@ URL_DATE = BASE_URL+"dates.json"
 URL_DAY = BASE_URL+"day.json"
 VALUE_ERROR_STRING = "One of the parameters you've entered is in the wrong type. Please refer to the documentation."
 
-class Prayer:
-    """Individual prayer object"""
-    def __init__(self, name:str, time:time):
-        self.name = name
-        self.time = time
-
-class Day:
-    """Day object, list of Prayer objects"""
-    def __init__(self, fajr:time, dhor:time, asr:time, maghreb:time, icha:time, date : datetime):
-        self.fajr = Prayer("fajr", fajr)
-        self.dhor = Prayer("dhor", dhor)
-        self.asr = Prayer("asr", asr)
-        self.maghreb = Prayer("maghreb", maghreb)
-        self.icha = Prayer("icha", icha)
-        self.date = date
-
-    def __str__(self) -> str:
-        """Returns a string to show the daily prayers"""
-        string = f"Date : {self.date} \n{self.fajr.name} : {self.fajr.time}\n{self.dhor.name} : {self.dhor.time} \n{self.asr.name} : {self.asr.time}\n{self.maghreb.name} : {self.maghreb.time} \n{self.icha.name} : {self.icha.time}"
-        return string
-
-    def next_prayer(self) -> Prayer:
-        """Returns an object of the next prayer, based on current time of the system"""
-        now_time = datetime.now().time()
-        if now_time <= self.fajr.time:
-            return self.fajr
-        elif now_time <= self.dhor.time:
-            return self.dhor
-        elif now_time <= self.asr.time:
-            return self.asr
-        elif now_time <= self.maghreb.time:
-            return self.maghreb
-        elif now_time <= self.icha.time:
-            return self.icha
-        else:
-            return None
 
 def parse_date_to_string(date_object:datetime) -> Response:
     return f"{date_object.year}-{date_object.month}-{date_object.day}"
@@ -122,7 +87,7 @@ class PrayerTimes:
 
     :param CITY: The city from where you need the calendar.
                         For example ``Brussels``
-    :type service_urls: string
+    :type CITY: string
 
     :param SCHOOL: Every school have a different calculation, we use 3 by default (Muslim World League).
                         For example 3
